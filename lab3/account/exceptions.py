@@ -1,0 +1,2 @@
+class NoSuchAccount(Exception):
+    pass

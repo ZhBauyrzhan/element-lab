@@ -2,5 +2,5 @@ def pow(a: float, n: int):
     return a ** n
 
 
-a, n = map(float, input().split())
-print(pow(float(a), int(n)))
+a = input().split()
+print(pow(float(a[0]), int(a[1])))
