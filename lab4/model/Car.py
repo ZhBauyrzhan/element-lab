@@ -10,7 +10,7 @@ from model.Engine import Engine
 from model.EngineCompanies import EngineCompanies
 
 
-@dataclass
+@dataclass  
 class Car(ABC):
     id: uuid = field(init=False)
     _car_brand: str
@@ -22,16 +22,20 @@ class Car(ABC):
     def __post_init__(self):
         self.id = uuid.uuid4()
 
-    def start(self) -> None:
+    @staticmethod
+    def start() -> None:
         print('Start')
 
-    def stop(self) -> None:
+    @staticmethod
+    def stop() -> None:
         print('Stop')
 
-    def turn_right(self) -> None:
+    @staticmethod
+    def turn_right() -> None:
         print('Turn right')
 
-    def turn_left(self) -> None:
+    @staticmethod
+    def turn_left() -> None:
         print('Turn left')
 
     @property
@@ -54,7 +58,7 @@ class Car(ABC):
     def engine(self) -> Engine:
         return self._engine
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         return f'id: {self.id} \n brand: {self.car_brand} \n class: {self.car_class} \n weight: {self.weight} \n driver: {self.car_driver} \n ' \
                f'engine: {self.engine}'
 

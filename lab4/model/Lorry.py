@@ -18,7 +18,7 @@ class Lorry(Car):
     def carrying(self) -> int:
         return self._carrying
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         return super().__str__() \
             + f'\n max people amount: {self.max_people_amount}' \
             f'\n carrying people amount: {self.carrying}'

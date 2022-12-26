@@ -13,10 +13,12 @@ from model.EngineCompanies import EngineCompanies
 class SportCar(Car):
     max_speed: decimal.Decimal
     _current_speed: decimal.Decimal
+
     @property
-    def speed(self)->decimal.Decimal:
+    def speed(self) -> decimal.Decimal:
         return self._current_speed
-    def __str__(self)->str:
+
+    def __repr__(self) -> str:
         return super().__str__() \
             + f'\n max speed: {self.max_speed}' \
               f'\n current speed: {self.speed}'
