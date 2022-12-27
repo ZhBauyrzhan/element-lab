@@ -12,16 +12,13 @@ from model.EngineCompanies import EngineCompanies
 @dataclass
 class Lorry(Car):
     max_people_amount: int
-    _carrying: int
 
-    @property
     def carrying(self) -> int:
-        return self._carrying
+        return self.max_people_amount
 
     def __repr__(self) -> str:
-        return super().__str__() \
+        return super().__repr__() \
             + f'\n max people amount: {self.max_people_amount}' \
-            f'\n carrying people amount: {self.carrying}'
 
 
 #

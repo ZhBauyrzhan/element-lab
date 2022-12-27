@@ -1,22 +1,14 @@
-import decimal
 from dataclasses import dataclass
-from datetime import date
 
 from model.Car import Car
-from model.CarClass import CarClass
-from model.Driver import Driver
-from model.Engine import Engine
-from model.EngineCompanies import EngineCompanies
 
 
 @dataclass
 class SportCar(Car):
-    max_speed: decimal.Decimal
-    _current_speed: decimal.Decimal
+    max_speed: int
 
-    @property
-    def speed(self) -> decimal.Decimal:
-        return self._current_speed
+    def speed(self) -> int:
+        return self.max_speed
 
     def __repr__(self) -> str:
         return super().__str__() \

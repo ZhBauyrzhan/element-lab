@@ -13,7 +13,7 @@ class Driver(Person):
         self.name = name
         self.surname = surname
         super().__init__(age=age, full_name=f'{surname} {name}')
-        self._started_driving_date = started_driving_date
+        self.started_driving_date = started_driving_date
 
     def experience(self) -> str:
         delta = relativedelta(date.today(), self._started_driving_date)

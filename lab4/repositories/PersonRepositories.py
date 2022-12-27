@@ -9,8 +9,8 @@ class PersonRepositories:
         Person(200, 'lkmxals')
     ]
 
-    def add_person(self, age: int, full_name: str) -> None:
-        self._persons.append(Person(age, full_name))
+    def add_person(self, person: Person) -> None:
+        self._persons.append(person)
 
     def delete_person(self, full_name: str) -> None:
         person = next(p for p in self._persons if p.full_name == full_name)
@@ -21,7 +21,7 @@ class PersonRepositories:
         return p is not None
 
     @property
-    def persons(self) -> List[Person]:
+    def people(self) -> List[Person]:
         return self._persons
 
 # p = PersonRepositories()
