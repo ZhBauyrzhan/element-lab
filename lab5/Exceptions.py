@@ -2,7 +2,7 @@ class LsError(Exception):
     pass
 
 
-class PathError(Exception):
+class ArgumentError(Exception):
     pass
 
 
