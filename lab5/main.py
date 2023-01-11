@@ -5,6 +5,7 @@ from os import getcwd, listdir, chdir
 from typing import List
 from os.path import isdir
 from Exceptions import ArgumentError, NoDirError
+import shutil
 
 
 @contextmanager
@@ -21,7 +22,7 @@ def _the_dir(command: List[str]) -> str:
 
 
 @contextmanager
-def _ls(command: List[str]) -> list[str]:
+def _ls(command: List[str]) -> List[str] | None:
     try:
         with _the_dir(command) as the_dir:
             yield listdir(the_dir)
@@ -34,7 +35,7 @@ def _ls(command: List[str]) -> list[str]:
 
 
 @contextmanager
-def _dir(command: List[str]) -> List[str]:
+def _dir(command: List[str]) -> List[str] | None:
     try:
         with _the_dir(command) as the_dir:
             yield [n for n in listdir(the_dir) if isdir(os.path.join(the_dir, n))]
@@ -91,17 +92,142 @@ def _mkdir(command: List[str]) -> bool:
         ...
 
 
+@contextmanager
+def _touch(command: List[str]) -> bool:
+    try:
+        if len(command) != 2:
+            raise ArgumentError
+        else:
+            open(os.path.join(getcwd(), command[1]), 'w')
+            yield True
+    except ArgumentError:
+        print('Wrong argument')
+        yield False
+    except FileExistsError as e:
+        print(e)
+        yield False
+    except FileNotFoundError as e:
+        print(e)
+        yield False
+    finally:
+        ...
+
+
+@contextmanager
+def _remove(command: List[str]) -> bool:
+    try:
+        if len(command) != 2:
+            raise ArgumentError
+        else:
+            os.remove(os.path.join(getcwd(), command[1]))
+            yield True
+    except ArgumentError:
+        print('Wrong argument')
+        yield False
+    except FileExistsError as e:
+        print(e)
+        yield False
+    except FileNotFoundError as e:
+        print(e)
+        yield False
+    finally:
+        ...
+
+
+@contextmanager
+def _rmdir(command: List[str]) -> bool:
+    try:
+        if len(command) != 2:
+            raise ArgumentError
+        else:
+            shutil.rmtree(os.path.join(getcwd(), command[1]))
+            yield True
+    except ArgumentError:
+        print('Wrong argument')
+        yield False
+    except FileExistsError as e:
+        print(e)
+        yield False
+    except FileNotFoundError as e:
+        print(e)
+        yield False
+    finally:
+        ...
+
+
+@contextmanager
+def _rename(command: List[str]) -> bool:
+    try:
+        if len(command) != 3:
+            raise ArgumentError
+        else:
+            os.rename(
+                os.path.join(getcwd(), command[1]),
+                os.path.join(getcwd(), command[2]),
+            )
+            yield True
+    except ArgumentError:
+        print('Wrong argument')
+        yield False
+    except FileExistsError as e:
+        print(e)
+        yield False
+    except FileNotFoundError as e:
+        print(e)
+        yield False
+    except OSError as e:
+        print(e)
+        yield False
+    finally:
+        ...
+
+
+@contextmanager
+def _type(command: List[str]) -> List[str] | None:
+    try:
+        if len(command) != 2:
+            raise ArgumentError
+        else:
+            yield [n for n in listdir(getcwd()) if n.endswith(command[1])]
+    except ArgumentError:
+        print('Wrong argument')
+        yield False
+    except FileExistsError as e:
+        print(e)
+        yield False
+    except FileNotFoundError as e:
+        print(e)
+        yield False
+    finally:
+        ...
+
+
 def init():
-    chdir('/home/zhnb/PycharmProjects')
-    print(getcwd())
-    # print(os.path.split(getcwd()))
-    # print(listdir('/home/zhnb/PycharmProjects/element-lab/lab3'))
-    # print(listdir('/home/zhnb/PycharmProjects/element-lab/lab3'))
-    print("Print 'help' to see commands or print command")
+    chdir('/home/zhnb')
     while True:
         command = input(getcwd() + '$').split()
         # print(_the_dir(command))
         match command[0]:
+            case 'type':
+                with _type(command) as files:
+                    if files is not None:
+                        print(files)
+            case 'rename':
+                with _rename(command) as rename:
+                    if rename:
+                        print('Successfully renamed')
+            case 'rmdir':
+                with _rmdir(command) as rm:
+                    if rm:
+                        print('Successfully deleted dir')
+            case 'remove':
+                with _remove(command) as rm:
+                    if rm:
+                        print('Successfully removed')
+            case 'touch':
+                with _touch(command) as touch:
+                    if touch:
+                        print('Successfully created')
             case 'mkdir':
                 with _mkdir(command) as mkdir:
                     if mkdir:
