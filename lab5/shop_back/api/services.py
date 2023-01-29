@@ -2,7 +2,7 @@ from typing import Protocol, OrderedDict
 
 from django.db.models import QuerySet
 
-from shop_back.api import models, repos
+from . import models, repos
 
 
 class CategoryServiceInterface(Protocol):
