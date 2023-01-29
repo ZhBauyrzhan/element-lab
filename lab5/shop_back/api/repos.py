@@ -16,6 +16,7 @@ class CategoryReposInterface(Protocol):
 class CategoryReposV1:
 
     def create_category(self, data: OrderedDict) -> models.Category:
+        print(**data)
         return models.Category.objects.create(**data)
 
     def get_categories(self) -> QuerySet[models.Category]:

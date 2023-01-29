@@ -23,6 +23,7 @@ class CategoryServiceV1:
 
     def create_category(self, data: OrderedDict) -> None:
         try:
+            print(data)
             self.category_repos.create_category(data=data)
         except Exception as e:
             print('Error in category service v1 during create operation', e)
