@@ -11,7 +11,7 @@ from . import views
 # router.register(r'categories', views.CategoryViewSet, basename='categories')
 # urlpatterns = router.urls
 urlpatterns = [
-    path(r'categories/<int:id>/products', views.ProductByCategoryView.as_view({'get': 'list'})),
+    path(r'categories/<int:pk>/products', views.ProductByCategoryView.as_view({'get': 'retrieve'})),
     # path('', include(router.urls))
 ]
 # urlpatterns = router.urls
