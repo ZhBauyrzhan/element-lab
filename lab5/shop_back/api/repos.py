@@ -6,40 +6,60 @@ from . import models
 
 
 class CategoryReposInterface(Protocol):
-    def create_category(self, data: OrderedDict) -> models.Category: ...
 
-    def get_category(self) -> QuerySet[models.Category]: ...
+    @staticmethod
+    def create_category(data: OrderedDict) -> models.Category: ...
 
-    def delete_category(self, category: models.Category) -> None: ...
+    @staticmethod
+    def get_categories() -> QuerySet[models.Category]: ...
+
+    @staticmethod
+    def delete_category(category: models.Category) -> None: ...
 
 
 class CategoryReposV1:
 
-    def create_category(self, data: OrderedDict) -> models.Category:
-        print(**data)
+    @staticmethod
+    def create_category(data: OrderedDict) -> models.Category:
+        print('CATEGORY REPOS CREATE')
+        print(data)
         return models.Category.objects.create(**data)
 
-    def get_categories(self) -> QuerySet[models.Category]:
+    @staticmethod
+    def get_categories() -> QuerySet[models.Category]:
+        print('CATEGORY REPOS GET')
         return models.Category.objects.all()
 
-    def delete_category(self, category: models.Category) -> None:
+    @staticmethod
+    def get_products_by_category(data: OrderedDict) -> QuerySet[models.Category]:
+        print('PRODUCTS BY CATEGORY GET')
+        return models.Category.objects.all().prefetch_related('pr')
+
+    @staticmethod
+    def delete_category(category: models.Category) -> None:
         category.delete()
 
 
 class ProductReposInterface(Protocol):
-    def create_product(self, data: OrderedDict) -> models.Product: ...
+    @staticmethod
+    def create_product(data: OrderedDict) -> models.Product: ...
 
-    def get_products(self) -> QuerySet[models.Product]: ...
+    @staticmethod
+    def get_products() -> QuerySet[models.Product]: ...
 
-    def delete_product(self, product: models.Product) -> None: ...
+    @staticmethod
+    def delete_product(product: models.Product) -> None: ...
 
 
 class ProductReposV1:
-    def create_product(self, data: OrderedDict) -> models.Product:
-        return models.Category.objects.create(**data)
+    @staticmethod
+    def create_product(data: OrderedDict) -> models.Product:
+        return models.Product.objects.create(**data)
 
-    def get_products(self) -> QuerySet[models.Product]:
-        return models.Category.objects.all()
+    @staticmethod
+    def get_products() -> QuerySet[models.Product]:
+        return models.Product.objects.all()
 
-    def delete_product(self, product: models.Product) -> None:
+    @staticmethod
+    def delete_product(product: models.Product) -> None:
         product.delete()

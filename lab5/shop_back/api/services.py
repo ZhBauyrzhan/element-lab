@@ -23,13 +23,16 @@ class CategoryServiceV1:
 
     def create_category(self, data: OrderedDict) -> None:
         try:
-            print(data)
+            # print(*data)
             self.category_repos.create_category(data=data)
         except Exception as e:
             print('Error in category service v1 during create operation', e)
 
     def get_categories(self, action: str) -> QuerySet[models.Category]:
-        return self.category_repos.get_category()
+        return self.category_repos.get_categories()
+
+    def get_products_by_category(self) -> QuerySet[models.Category]:
+        return self.category_repos.get_
 
     def delete_category(self, category: models.Category) -> None:
         try:
@@ -55,7 +58,7 @@ class ProductServiceV1:
         try:
             self.protocol_repos.create_product(data=data)
         except Exception as e:
-            print(e)
+            print('Error in product service v1',  e)
 
     def get_products(self, action: str) -> QuerySet[models.Product]:
         return self.protocol_repos.get_products()
