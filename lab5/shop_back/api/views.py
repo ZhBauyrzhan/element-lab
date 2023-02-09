@@ -29,3 +29,4 @@ class ProductViewSet(ModelViewSet):
     def perform_create(self, serializer):
         print(serializer.validated_data)
         self.product_service.create_product(serializer.validated_data)
+    
